@@ -1,4 +1,6 @@
-var BBCode = new BBCode({
+import * as scratchblocks from 'https://scratchblocks.github.io/js/scratchblocks-v3.5.2-min.js';
+
+var bbcode_parser = new BBCode({
     '\\[br\\]': '<br>',
 
     '\\[b\\](.+?)\\[/b\\]': '<b>$1</b>',
@@ -51,3 +53,18 @@ var BBCode = new BBCode({
   
     '\\[scratchblocks\\](.+?)\\[/scratchblocks\\]': '<pre class="blocks">$1</pre>'
 });
+var obj = {
+  style: 'scratch3',
+  script: document.getElementsByClassName("blocks").innerHTML,
+  lang: 'en'
+};
+var preview = document.getElementById("preview");
+// render code
+  var doc = window.doc = scratchblocks.parse(obj.script, {
+    languages: obj.lang ? ['en', obj.lang] : ['en']
+  });
+  var docView = scratchblocks.newView(doc, {
+    style: obj.style
+  })
+  var svg = docView.render()
+  preview.appendChild(svg);
